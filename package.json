@@ -1,0 +1,22 @@
+{
+  "name": "chatbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/velascoDev/chatbot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/velascoDev/chatbot/issues"
+  },
+  "homepage": "https://github.com/velascoDev/chatbot#readme",
+  "devDependencies": {
+    "express": "^4.15.3"
+  }
+}
