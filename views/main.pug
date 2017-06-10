@@ -1,0 +1,57 @@
+html
+	head
+		meta(charset='UTF-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+		meta(name='viewport', content='width=device-width,initial-scale=1')
+		title Chat Bot
+		meta(name='author', content='Eduardo J. Velasco')
+		meta(name='description', content='A simple chat bot powered by the Watson API')
+		link(rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+		link(rel="stylesheet" type="text/css" href="/css/main.css")
+	body
+		.container
+			.chat
+				.chat-history
+					ul.chat-ul
+						li
+							.message-data Name
+								span.message-data-name 
+							.message.you-message
+								| A new client?!?! I would love to help them, but where are we going to find the time?
+						li.clearfix
+							.message-data.align-right
+								span.message-data-name Nimble
+							.message.me-message.float-right
+								| We should take a look at your onboarding and service delivery workflows, for most businesess there are many ways to save time and not compromise quality.
+						li.clearfix
+							.message-data
+								span.message-data-name Name
+							.message.you-message
+								| What?! No way, how did I miss that. I never forgot that part before.
+						li.clearfix
+							.message-data.align-right
+								span.message-data-name Nimble
+							.message.me-message.float-right
+								| Remembering everything can quickly become impossible as your business grows, we need to take a look at your reminder management system and also see if there are steps in your business we can automate.
+						li
+							.message-data
+								span.message-data-name Name
+							.message.you-message
+								| 6? Bob told me 8! How did this mix up happen?!
+						li.clearfix
+							.message-data.align-right
+								span.message-data-name Nimble
+							.message.me-message.float-right
+								| The more people in your business, the more opportunity for mistakes, having a solid system in place for tracking important client data will help avoid these miscommunications.
+						li
+							.message-data
+								span.message-data-name Name
+							.message.you-message
+								| I know that I spoke with Mary about this, but where did I put that note...hopefully she also sent me an email...
+						li.clearfix
+							.message-data.align-right
+								span.message-data-name Nimble
+							.message.me-message.float-right
+								| Finding the right information when you need it will save you time and energy. Your data management systems need to grow with your business. All businesses need a dynamic data strategy and a system to ensure that the strategy is implemented correctly.
+		.chat-window
+			input(class="chat-input" type="text" placeholder="Type a message...")
