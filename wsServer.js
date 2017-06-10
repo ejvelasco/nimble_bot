@@ -15,7 +15,7 @@ const wsServer = new WebSocketServer({
 });
 
 server.listen(port, () => {
-	console.log(`Server is listening on ${port} 1337.`);
+	console.log(`Server is listening on ${port}`);
 });
 
 wsServer.on('request', (request) => {
@@ -24,9 +24,9 @@ wsServer.on('request', (request) => {
 	connection.on('message', (msg) => {
 		const message = msg.utf8Data;
 		if(message === "test"){
-			connection.sendUTF('Hello, I am Nimble.');
+			connection.sendUTF('Hello, I am Nimble. For now, I just echo whatever you say.');
 		} else {  
-			connection.sendUTF('Received Message: ' + message);
+			connection.sendUTF(message);
 		}
 		console.log('Received Message: ' + message );
 	});

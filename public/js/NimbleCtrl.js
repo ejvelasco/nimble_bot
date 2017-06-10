@@ -15,7 +15,7 @@ module.exports = (app, $) => {
  				$scope.$apply(() => {
  					$scope.typing = false;
 		 			$scope.messages.push({
-		 					subject: "Nimble",
+		 					subject: "Nimble Bot",
 		 					title_class: "message-data",
 		 					class: "message you-message",
 		 					data: event.data
@@ -29,7 +29,7 @@ module.exports = (app, $) => {
  				$scope.$apply(() => {
  					$scope.typing = false;
 		 			$scope.messages.push({
-		 					subject: "Nimble",
+		 					subject: "Nimble Bot",
 		 					title_class: "message-data",
 		 					class: "message you-message",
 		 					data: event.data
