@@ -39,7 +39,7 @@ wsServer.on('request', (request) => {
 function isAllowedOrigin(origin) {
 	//valid
 	const validOrigins = [
-		'http://localhost:5000',
+		'http://localhost:8080',
 		'127.0.0.1',
 		'null'
 	];
