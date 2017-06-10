@@ -43637,6 +43637,7 @@ return jQuery;
 
 	var angular = require("angular");
 	var $ = require("jquery");
+	//angular
 	var NimbleApp = angular.module("NimbleApp", []);
 	require("./NimbleMethods")(NimbleApp, $);
 	require("./NimbleCtrl")(NimbleApp, $);
@@ -43646,61 +43647,17 @@ return jQuery;
 "use strict";
 
 module.exports = function (app, $) {
-  app.controller("NimbleCtrl", ["$scope", "$http", "NimbleMethods", function ($scope, $http, NimbleMethods) {
-    $scope.messages = [];
-    var ws = new WebSocket('ws://localhost:1337', 'echo-protocol');
-    $scope.typing = false;
-    var counter = 0;
-    ws.onmessage = function (event) {
+	app.controller("NimbleCtrl", ["$scope", "$http", "NimbleMethods", function ($scope, $http, NimbleMethods) {
 
-      var $body = $('body');
-      var $container = $("#chat");
+		$scope.messages = [];
+		$scope.typing = false;
+		$scope.counter = 0;
+		$scope.webSocket = NimbleMethods.setUpConnection($scope);
 
-      if (counter === 0) {
-        $scope.$apply(function () {
-          $scope.typing = false;
-          $scope.messages.push({
-            subject: "Nimble Bot",
-            title_class: "message-data",
-            class: "message you-message",
-            data: event.data
-          });
-        });
-        $body.animate({
-          scrollTop: $container.prop('scrollHeight')
-        }, 500);
-      } else {
-        setTimeout(function () {
-          $scope.$apply(function () {
-            $scope.typing = false;
-            $scope.messages.push({
-              subject: "Nimble Bot",
-              title_class: "message-data",
-              class: "message you-message",
-              data: event.data
-            });
-          });
-          $body.animate({
-            scrollTop: $container.prop('scrollHeight')
-          }, 500);
-        }, 3000);
-      }
-
-      counter++;
-    };
-    ws.onclose = function (event) {
-      console.log('Connection closed.');
-    };
-    ws.onerror = function (event) {
-      console.log('An error occurred. Sorry for that.');
-    };
-    ws.onopen = function (event) {
-      ws.send("test");
-    };
-    $scope.sendMsg = function ($event) {
-      return NimbleMethods.send($scope, $event, ws);
-    };
-  }]);
+		$scope.sendMsg = function ($event) {
+			return NimbleMethods.send($scope, $event);
+		};
+	}]);
 };
 
 },{}],6:[function(require,module,exports){
@@ -43711,36 +43668,96 @@ module.exports = function (app, $) {
 	app.factory("NimbleMethods", function () {
 
 		var NimbleMethods = {
-			send: function send($scope, $event, ws) {
-				if ($event.keyCode === 13) {
-					var $body = $('body');
-					var $message = $("#chatInput");
-					var $container = $("#chat");
-					var message = $message.val();
-					ws.send(message);
-					setTimeout(function () {
-						$scope.$apply(function () {
-							$scope.typing = true;
-						});
-						setTimeout(function () {
-							$body.animate({
-								scrollTop: $container.prop('scrollHeight')
-							}, 500);
-						});
-					}, 1000);
+			send: function send($scope, $event) {
+
+				if ($event.keyCode !== 13) {
+					return;
+				}
+
+				var $body = $('body');
+				var $message = $("#chatInput");
+				var $container = $("#chat");
+				var message = $message.val();
+
+				$scope.webSocket.send(message);
+				setTimeout(function () {
+					$scope.$apply(function () {
+						$scope.typing = true;
+					});
 					setTimeout(function () {
 						$body.animate({
 							scrollTop: $container.prop('scrollHeight')
 						}, 500);
 					});
-					$scope.messages.push({
-						subject: "Me",
-						title_class: "message-data align-right",
-						class: "message me-message",
-						data: message
-					});
-					$message.val("");
-				}
+				}, 1000);
+				setTimeout(function () {
+					$body.animate({
+						scrollTop: $container.prop('scrollHeight')
+					}, 500);
+				});
+				$scope.messages.push({
+					subject: "Me",
+					title_class: "message-data align-right",
+					class: "message me-message",
+					data: message
+				});
+				$message.val("");
+			},
+			setUpConnection: function setUpConnection($scope) {
+
+				var ws = new WebSocket('ws://localhost:1337', 'echo-protocol');
+				var $body = void 0;
+				var $container = void 0;
+
+				ws.onmessage = function (event) {
+
+					$body = $('body');
+					$container = $("#chat");
+
+					if ($scope.counter === 0) {
+						$scope.$apply(function () {
+							$scope.typing = false;
+							$scope.messages.push({
+								subject: "Nimble Bot",
+								title_class: "message-data",
+								class: "message you-message",
+								data: event.data
+							});
+						});
+						$body.animate({
+							scrollTop: $container.prop('scrollHeight')
+						}, 500);
+					} else {
+						setTimeout(function () {
+							$scope.$apply(function () {
+								$scope.typing = false;
+								$scope.messages.push({
+									subject: "Nimble Bot",
+									title_class: "message-data",
+									class: "message you-message",
+									data: event.data
+								});
+							});
+							$body.animate({
+								scrollTop: $container.prop('scrollHeight')
+							}, 500);
+						}, 3000);
+					}
+					$scope.counter++;
+				};
+
+				ws.onclose = function (event) {
+					console.log('Connection closed.');
+				};
+
+				ws.onerror = function (event) {
+					console.log('An error occurred. Sorry for that.');
+				};
+
+				ws.onopen = function (event) {
+					ws.send("test");
+				};
+				return ws;
 			}
 		};
 		return NimbleMethods;
