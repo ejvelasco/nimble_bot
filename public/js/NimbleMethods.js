@@ -70,7 +70,7 @@ module.exports = (app, $) => {
 			},
 			setUpConnection($scope){
 		 		//configure ws
-		 		const ws = new WebSocket('ws://localhost:1337', 'echo-protocol');
+		 		const ws = new WebSocket('ws://192.237.207.37:1337', 'echo-protocol');
 		 		let $body;
 		 		let $container;
 		 		//message event

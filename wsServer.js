@@ -49,6 +49,7 @@ function isAllowedOrigin(origin) {
 	//valid
 	const validOrigins = [
 		'http://localhost:8080',
+		'http://192.237.207.37:8080'
 		'127.0.0.1',
 		'null'
 	];
