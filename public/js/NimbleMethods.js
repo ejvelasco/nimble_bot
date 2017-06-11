@@ -69,7 +69,7 @@ module.exports = (app, $) => {
 				$message.val("");
 			},
 			setUpConnection($scope){
-		 		//configure ws
+		 		// configure ws
 		 		const ws = new WebSocket('ws://192.237.207.37:1337', 'echo-protocol');
 		 		let $body;
 		 		let $container;
