@@ -43755,7 +43755,7 @@ module.exports = function (app, $) {
 				};
 
 				ws.onopen = function (event) {
-					ws.send("test");
+					ws.send("Hey!");
 				};
 				return ws;
 			}
