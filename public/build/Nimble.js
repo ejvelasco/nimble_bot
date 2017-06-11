@@ -43634,10 +43634,10 @@ return jQuery;
 "use strict";
 
 (function () {
-
+	//libraries
 	var angular = require("angular");
 	var $ = require("jquery");
-	//angular
+	//configure Nible App
 	var NimbleApp = angular.module("NimbleApp", []);
 	require("./NimbleMethods")(NimbleApp, $);
 	require("./NimbleCtrl")(NimbleApp, $);
@@ -43648,12 +43648,12 @@ return jQuery;
 
 module.exports = function (app, $) {
 	app.controller("NimbleCtrl", ["$scope", "$http", "NimbleMethods", function ($scope, $http, NimbleMethods) {
-
+		//Set up data
 		$scope.messages = [];
 		$scope.typing = false;
 		$scope.counter = 0;
 		$scope.webSocket = NimbleMethods.setUpConnection($scope);
-
+		//Send function
 		$scope.sendMsg = function ($event) {
 			return NimbleMethods.send($scope, $event);
 		};
@@ -43664,15 +43664,13 @@ module.exports = function (app, $) {
 "use strict";
 
 module.exports = function (app, $) {
-
 	app.factory("NimbleMethods", function () {
-
+		//format date
 		function getDate() {
-
 			var currentdate = new Date();
 			var mins = currentdate.getMinutes();
 			var hours = currentdate.getHours();
-
+			//checks
 			if (hours < 12) {
 				if (hours === 0) {
 					hours = 12;
@@ -43686,24 +43684,23 @@ module.exports = function (app, $) {
 			if (mins < 10) {
 				mins = "0" + mins;
 			}
-
+			//finish
 			var datetime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " at " + hours + ":" + mins;
-
 			return datetime;
 		}
 
 		var NimbleMethods = {
 			send: function send($scope, $event) {
-
+				//ensure enter key
 				if ($event.keyCode !== 13) {
 					return;
 				}
-
+				//add message
 				var $body = $('body');
 				var $message = $("#chatInput");
 				var $container = $("#chat");
 				var message = $message.val();
-
+				//send message
 				$scope.webSocket.send(message);
 				setTimeout(function () {
 					$scope.$apply(function () {
@@ -43715,11 +43712,13 @@ module.exports = function (app, $) {
 						}, 500);
 					});
 				}, 1000);
+				//slide messages up
 				setTimeout(function () {
 					$body.animate({
 						scrollTop: $container.prop('scrollHeight')
 					}, 500);
 				});
+				//push message
 				$scope.messages.push({
 					subject: "Me",
 					title_class: "message-data align-right",
@@ -43727,19 +43726,19 @@ module.exports = function (app, $) {
 					data: message,
 					time: getDate()
 				});
+				//clear input
 				$message.val("");
 			},
 			setUpConnection: function setUpConnection($scope) {
-
+				//configure ws
 				var ws = new WebSocket('ws://localhost:1337', 'echo-protocol');
 				var $body = void 0;
 				var $container = void 0;
-
+				//message event
 				ws.onmessage = function (event) {
-
 					$body = $('body');
 					$container = $("#chat");
-
+					//Response to test message
 					if ($scope.counter === 0) {
 						$scope.$apply(function () {
 							$scope.typing = false;
@@ -43773,21 +43772,23 @@ module.exports = function (app, $) {
 					}
 					$scope.counter++;
 				};
-
+				//close event
 				ws.onclose = function (event) {
 					console.log('Connection closed.');
 				};
-
+				//error event
 				ws.onerror = function (event) {
 					console.log('An error occurred. Sorry for that.');
 				};
-
+				//open event
 				ws.onopen = function (event) {
 					ws.send("Hey!");
 				};
+
 				return ws;
 			}
 		};
+
 		return NimbleMethods;
 	});
 };

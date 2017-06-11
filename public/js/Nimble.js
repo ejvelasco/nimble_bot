@@ -1,10 +1,10 @@
 "use strict";
 
 (() => {
-
+	//libraries
 	const angular = require("angular");
 	const $ = require("jquery");
-	//angular
+	//configure Nible App
 	const NimbleApp = angular.module("NimbleApp", []);
 	require("./NimbleMethods")(NimbleApp, $);
 	require("./NimbleCtrl")(NimbleApp, $);
