@@ -8,13 +8,14 @@ html
 		link(rel="stylesheet" type="text/css" href="/build/Nimble.css")
 	body(ng-app="NimbleApp" ng-controller="NimbleCtrl")
 		.container
-			.chat
+			.chat(ng-cloak)
 				.chat-history#chat
 					ul.chat-ul
 						li(ng-repeat = "message in messages")
 							div( ng-class = "message.title_class")
 								span.message-data-name {{ message.subject }}
 							div( ng-class = "message.class") {{ message.data }}
+								p.time {{ message.time }}
 					p(class="typing" ng-show="typing") Nimble is typing...
 		.chat-window
 			input(class="chat-input" id="chatInput" type="text" placeholder="Type a message..." ng-keydown="sendMsg($event)")

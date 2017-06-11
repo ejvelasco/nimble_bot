@@ -4,6 +4,33 @@ module.exports = (app, $) => {
 
 	app.factory("NimbleMethods", () => {
 		
+		function getDate() {
+			
+			const currentdate = new Date();
+			let mins =  currentdate.getMinutes();
+			let hours = currentdate.getHours();
+			 
+			if (hours < 12) {
+				if (hours === 0) {
+					hours = 12;
+				}
+				hours = hours; 
+				mins = mins + "am";
+			} else {
+				hours = hours%12;
+				mins = mins + "pm";
+			}
+			if (mins < 10) {
+				mins = "0"+mins;
+			}
+
+			let datetime = currentdate.getDay() + "/"+currentdate.getMonth()
+			+ "/" + currentdate.getFullYear() + " at " 
+			+ hours + ":" + mins;
+
+			return datetime;
+		}
+
  		const NimbleMethods = {
 			send($scope, $event){
 				
@@ -36,7 +63,8 @@ module.exports = (app, $) => {
 					subject: "Me",
 					title_class: "message-data align-right",
 					class: "message me-message",
-					data: message
+					data: message, 
+					time: getDate()
 				});
 				$message.val("");
 			},
@@ -58,7 +86,8 @@ module.exports = (app, $) => {
 				 					subject: "Nimble Bot",
 				 					title_class: "message-data",
 				 					class: "message you-message",
-				 					data: event.data
+				 					data: event.data, 
+				 					time: getDate()
 				 			});
 		 				});
 		 				$body.animate({
@@ -72,7 +101,8 @@ module.exports = (app, $) => {
 					 					subject: "Nimble Bot",
 					 					title_class: "message-data",
 					 					class: "message you-message",
-					 					data: event.data
+					 					data: event.data,
+					 					time: getDate()
 					 			});
 			 				});
 			 				$body.animate({

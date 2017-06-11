@@ -43667,6 +43667,31 @@ module.exports = function (app, $) {
 
 	app.factory("NimbleMethods", function () {
 
+		function getDate() {
+
+			var currentdate = new Date();
+			var mins = currentdate.getMinutes();
+			var hours = currentdate.getHours();
+
+			if (hours < 12) {
+				if (hours === 0) {
+					hours = 12;
+				}
+				hours = hours;
+				mins = mins + "am";
+			} else {
+				hours = hours % 12;
+				mins = mins + "pm";
+			}
+			if (mins < 10) {
+				mins = "0" + mins;
+			}
+
+			var datetime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " at " + hours + ":" + mins;
+
+			return datetime;
+		}
+
 		var NimbleMethods = {
 			send: function send($scope, $event) {
 
@@ -43699,7 +43724,8 @@ module.exports = function (app, $) {
 					subject: "Me",
 					title_class: "message-data align-right",
 					class: "message me-message",
-					data: message
+					data: message,
+					time: getDate()
 				});
 				$message.val("");
 			},
@@ -43721,7 +43747,8 @@ module.exports = function (app, $) {
 								subject: "Nimble Bot",
 								title_class: "message-data",
 								class: "message you-message",
-								data: event.data
+								data: event.data,
+								time: getDate()
 							});
 						});
 						$body.animate({
@@ -43735,7 +43762,8 @@ module.exports = function (app, $) {
 									subject: "Nimble Bot",
 									title_class: "message-data",
 									class: "message you-message",
-									data: event.data
+									data: event.data,
+									time: getDate()
 								});
 							});
 							$body.animate({
